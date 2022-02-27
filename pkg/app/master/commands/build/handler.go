@@ -168,9 +168,7 @@ func OnCommand(
 	rtaOnbuildBaseImage bool,
 	rtaSourcePT bool,
 	sensorIPCEndpoint string,
-	sensorIPCMode string,
-	logLevel string,
-	logFormat string) {
+	sensorIPCMode string) {
 
 	const cmdName = Name
 	logger := log.WithFields(log.Fields{"app": appName, "command": cmdName})
@@ -386,7 +384,9 @@ func OnCommand(
 			depExcludeComposeSvcs)
 
 		//todo: move compose flags to options
-		options := &compose.ExecutionOptions{SvcStartWait: composeSvcStartWait}
+		options := &compose.ExecutionOptions{
+			SvcStartWait: composeSvcStartWait,
+		}
 
 		logger.Debugf("compose: file(s)='%s' selectors='%+v'\n",
 			strings.Join(composeFiles, ","), selectors)
@@ -1005,8 +1005,8 @@ func OnCommand(
 		doIncludeNew,
 		selectedNetworks,
 		gparams.Debug,
-		logLevel,
-		logFormat,
+		gparams.LogLevel,
+		gparams.LogFormat,
 		gparams.InContainer,
 		sensorIPCEndpoint,
 		sensorIPCMode,
